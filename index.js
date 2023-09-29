@@ -52,7 +52,6 @@ app.get("/movies/:id", async (req, res) => {
 
 app.post("/movies", async (req, res) => {
   try {
-    // const request = await database`SELECT * FROM movies WHERE id = ${id}`;
     const {
       name,
       realese_date,
@@ -89,6 +88,99 @@ app.post("/movies", async (req, res) => {
     });
   }
 });
+
+
+
+// end point cinemas
+
+// get all cinemas
+app.get("/cinemas", async (req, res) => {
+  try {
+
+   const request = await database `SELECT * FROM cinemas`
+
+   res.json({
+      status : true,
+      massage : "Get data succes",
+      data : request
+   })
+
+    
+  } catch (error) {
+    res.json({
+      status : false,
+      massage : "something wron in server",
+      data : []
+    })
+  }
+})
+
+// get selected id cinemas
+app.get("/cinemas/:id", async (req, res) => {
+
+  try {
+
+    const {id} = req.params
+
+    request = await database `SELECT * FROM cinemas where id = ${id}`
+
+    res.json({
+      status : true,
+      massage : "get selected id done",
+      data : request
+    })
+
+
+    
+  } catch (error) {
+    res.json({
+      status : false,
+      massage : "something wrong in server",
+      data : []
+    })
+  }
+
+})
+
+// post cinemas
+app.post("/cinemas", async (req, res) => {
+try {
+
+  const {
+    movie_id,
+    name,
+    city,
+    address,
+    show_times,
+    price,
+    logo
+  } = req.body;
+
+  const request = await database `INSERT INTO cinemas(movie_id,name,city,address,show_times,price,logo)
+    VALUES(${movie_id},${name},${city},${address},${show_times},${price},${logo}) RETURNING id `;
+
+    if (request.length>0) {
+      res.json({
+        status : true,
+        massage : "post data succes",
+      })
+    } else {
+      console.log(error)
+    }
+  
+} catch (error) {
+  res.json({
+    status : false,
+    massage : "error in server",
+    data : []
+  })
+}
+
+})
+// end point user
+
+
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
