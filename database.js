@@ -8,4 +8,4 @@ const sql = postgres({
     port : 5432,
 }); // will use psql environment variables
 
-module.export = sql;
+module.exports = sql;
