@@ -177,9 +177,103 @@ try {
 }
 
 })
+
+
 // end point user
 
+//get all user
 
+app.get("/users", async (req, res) => {
+  try {
+    const request = await database `SELECT * FROM users`
+    res.json({
+      status : true,
+      massage : "Get data user suscces",
+      data : request
+    });
+  } catch (error) {
+    res.json({
+      status : false,
+      massage : "something wron in server",
+      data : []
+    });
+  }
+})
+
+//get selected user
+
+app.get("/users/:id", async (req, res) => {
+  try {
+
+    const{id} = req.params;
+
+    const request = await database `SELECT * FROM users WHERE id = ${id}`
+
+    res.json({
+      status : true,
+      massage : "Get Selected User Succes",
+      data : request
+    });
+    
+  } catch (error) {
+    res.json({
+      status : false,
+      massage : "Something wrong in server",
+      data : []
+    });
+  }
+})
+
+//post user
+
+app.post("/users", async (req, res) => {
+
+  try {
+    
+  const {
+      first_name,
+      last_name,
+      phone_number,
+      email,
+      password,
+      photo_profile
+    } = req.body
+
+   const request = await database `INSERT INTO users( 
+    first_name,
+    last_name,
+    phone_number,
+    email,
+    password,
+    photo_profile) VALUES (
+      ${first_name},
+      ${last_name},
+      ${phone_number},
+      ${email},
+      ${password},
+      ${photo_profile}
+    ) RETURNING id`;
+
+
+    if (request.length>0) {
+      res.json({
+        status : true,
+        massage : "Post data success",
+        data : request
+      })
+    } else {
+      console.log("please fill data completely")
+    }
+    
+  } catch (error) {
+    res.json({
+      status : false,
+      massage : "something wron in server",
+      data : []
+    })
+  }
+
+})
 
 
 app.listen(port, () => {
