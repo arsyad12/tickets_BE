@@ -62,6 +62,24 @@ app.post("/movies", async (req, res) => {
       synopsis,
       posters,
     } = req.body;
+    
+    const isInputValid =  name&&
+    realese_date&&
+    duration&&
+    genres&&
+    directed_by&&
+    casts&&
+    synopsis&&
+    posters;
+
+    if (!isInputValid) {
+      res.json({
+        status: false,
+        massage: "please make sure input completed",
+      });
+    } else {
+      
+    }
 
     // console.log(req.body); for checking data received in express
     const request = await database`INSERT INTO movies(name,realese_date,duration,genres,directed_by,casts,synopsis,posters)
@@ -75,7 +93,7 @@ app.post("/movies", async (req, res) => {
     } else {
       res.json({
         status: false,
-        massage: "please make sure input completed",
+        massage: "Fail to post data",
       });
     }
 
@@ -156,6 +174,23 @@ try {
     logo
   } = req.body;
 
+  const isInputValid = movie_id &&
+  name&&
+  city&&
+  address&&
+  show_times&&
+  price&&
+  logo;
+
+  if (!isInputValid) {
+    res.json({
+      status : false,
+      massage : "Please makesure input data completed",
+    });
+  } else {
+    
+  }
+
   const request = await database `INSERT INTO cinemas(movie_id,name,city,address,show_times,price,logo)
     VALUES(${movie_id},${name},${city},${address},${show_times},${price},${logo}) RETURNING id `;
 
@@ -165,13 +200,16 @@ try {
         massage : "post data succes",
       })
     } else {
-      console.log(error)
+      res.json({
+        status : false,
+        massage : "fail to post data",
+      });
     }
   
 } catch (error) {
   res.json({
     status : false,
-    massage : "error in server",
+    massage : "somethin wrong in server",
     data : []
   })
 }
@@ -239,6 +277,22 @@ app.post("/users", async (req, res) => {
       photo_profile
     } = req.body
 
+    const isInputValid = first_name &&
+    last_name&&
+    phone_number&&
+    email&&
+    password&&
+    photo_profile;
+
+    if (!isInputValid) {
+      res.json({
+        status : false,
+        massage : "please maksure data completely",
+      });
+    } else {
+      
+    }
+
    const request = await database `INSERT INTO users( 
     first_name,
     last_name,
@@ -260,9 +314,12 @@ app.post("/users", async (req, res) => {
         status : true,
         massage : "Post data success",
         data : request
-      })
+      });
     } else {
-      console.log("please fill data completely")
+      res.json({
+        status : false,
+        massage : "Fail to post data"
+      });
     }
     
   } catch (error) {
