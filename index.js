@@ -1,7 +1,12 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+require('dotenv').config();
 const database = require("./database");
+const { request } = require("http");
+let port = process.env.PORT;
+const bcrypt = require('bcrypt'); 
+
+
 
 //for give acces receive data in express from outside
 app.use(express.urlencoded({ extended: false }));
@@ -106,6 +111,71 @@ app.post("/movies", async (req, res) => {
     });
   }
 });
+
+
+// update movies
+
+app.put("/movies/:id", async (req, res) => {
+  const {id} = req.params
+  const { name,
+    realese_date,
+    duration,
+    genres,
+    directed_by,
+    casts,
+    synopsis,
+    posters} = req.body
+  
+    try {
+    const request = await database `UPDATE movies
+    SET  name = ${name},
+    realese_date = ${realese_date},
+    duration = ${duration},
+    genres = ${genres},
+    directed_by = ${directed_by},
+    casts = ${casts},
+    synopsis = ${synopsis},
+    posters = ${posters}
+    WHERE id = ${id};`
+
+    res.status(200).json({
+        status : "Succes",
+        massage : "Update data succes",
+
+    });
+
+  } catch (error) {
+    res.status(502).json({
+      status : "Error",
+      massage : "Something wrong in server",
+  });
+  }
+})
+
+
+// delete movies
+
+app.delete("/movies/:id", async (req, res) => {
+const {id} = req.params
+
+try {
+  const request = await database `DELETE FROM movies WHERE id = ${id}`
+  
+  res.status(200).json({
+    status : "success",
+    massage : "Delete data success"
+  })
+
+} catch (error) {
+  res.status(502).json({
+    status : "Error",
+    massage : "Something Wrong in Server"
+  })
+}
+
+})
+
+
 
 
 
@@ -216,14 +286,97 @@ try {
 
 })
 
+// update cinemas
+
+app.put("/cinemas/:id", async (req, res) => {
+
+  const {id} = req.params
+
+  const { movie_id,
+    name,
+    city,
+    address,
+    show_times,
+    price,
+    logo} = req.body
+
+    try {
+
+      const request = await database `UPDATE cinemas
+      SET movie_id = ${movie_id},
+          name = ${name},
+          city =${city},
+          address =${address},
+          show_times = ${show_times},
+          price = ${price},
+          logo = ${logo}
+      WHERE id = ${id};`
+
+      res.status(200).json({
+        status : "success",
+        massage : "Update data success",
+        data : request
+      })
+      
+    } catch (error) {
+    
+      res.status(502).json({
+        status : "False",
+        massage : "Something wrong in server",
+        data : request
+      })
+      
+      
+    }
+
+})
+
+
+// delete cinemas
+
+app.delete("/cinemas/:id", async (req, res) => {
+  const {id} = req.params
+
+  try {
+    const request = await database `DELETE FROM cinemas
+    WHERE id = ${id};`
+    res.status(200).json({
+      status : "true",
+      massage : "delete data succes",
+    })
+  } catch (error) {
+    res.status(502).json({
+      status : "false",
+      massage : "something error in server",
+    })
+  }
+
+})
+
+
+
+
 
 // end point user
 
 //get all user
 
+
+
+
+// end point user
+// end point /users -> for get data user except password and email
+// end point /users/me -> for get all data with password and email
+// end point users/register -> for post data user, it must with password encryption
+// end point users/login -> for acces data with token JWT(json web token)
+// end point users/edit -> for edit data with encrypton after login with JWT
+
+//get all user
+
 app.get("/users", async (req, res) => {
   try {
-    const request = await database `SELECT * FROM users`
+    const request = await database `SELECT first_name,last_name,phone_number,photo_profile FROM users`
+    // id, email and pass is privacy, so dont call on this endpoint
     res.json({
       status : true,
       massage : "Get data user suscces",
@@ -238,31 +391,7 @@ app.get("/users", async (req, res) => {
   }
 })
 
-//get selected user
-
-app.get("/users/:id", async (req, res) => {
-  try {
-
-    const{id} = req.params;
-
-    const request = await database `SELECT * FROM users WHERE id = ${id}`
-
-    res.json({
-      status : true,
-      massage : "Get Selected User Succes",
-      data : request
-    });
-    
-  } catch (error) {
-    res.json({
-      status : false,
-      massage : "Something wrong in server",
-      data : []
-    });
-  }
-})
-
-//post user
+//users/register (post user)
 
 app.post("/users", async (req, res) => {
 
@@ -293,6 +422,11 @@ app.post("/users", async (req, res) => {
       
     }
 
+    // this 3 variable is for encryption password
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync(password, salt); //password is from deconstruction parameter
+
    const request = await database `INSERT INTO users( 
     first_name,
     last_name,
@@ -304,10 +438,10 @@ app.post("/users", async (req, res) => {
       ${last_name},
       ${phone_number},
       ${email},
-      ${password},
+      ${hash}, 
       ${photo_profile}
     ) RETURNING id`;
-
+// the password values, change with hash because we need value encryption password from hash
 
     if (request.length>0) {
       res.json({
@@ -332,7 +466,21 @@ app.post("/users", async (req, res) => {
 
 })
 
+// update user
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+app.post("/cinemas:id", async (req, res) => {
+
+})
+
+
+// delete user
+
+app.post("/cinemas", async (req, res) => {
+
+})
+
+
+
+app.listen(port, ()=>{
+  console.log(`http://localhost:${port}`)
+})
