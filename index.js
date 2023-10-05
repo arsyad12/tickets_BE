@@ -406,6 +406,7 @@ app.post("/users", async (req, res) => {
       photo_profile
     } = req.body
 
+    //validation input must fill data correctly and completed
     const isInputValid = first_name &&
     last_name&&
     phone_number&&
@@ -418,8 +419,18 @@ app.post("/users", async (req, res) => {
         status : false,
         massage : "please maksure data completely",
       });
-    } else {
-      
+      return;
+    } 
+
+    //validation for checking email, for prevent same email or duplicate email
+    const checkEmail = await database `SELECT * FROM users WHERE email =${email}`
+
+    if (checkEmail.length > 0) {
+      res.status(400).json({
+        status : "false",
+        massage : "Email has already register",
+      })
+        return;
     }
 
     // this 3 variable is for encryption password
@@ -468,8 +479,45 @@ app.post("/users", async (req, res) => {
 
 // update user
 
-app.post("/cinemas:id", async (req, res) => {
+app.post("/users/login", async (req, res) => {
+try {
+  
+  const {email,password} =req.body
+  
+  //check if email registered
+  const checkEmail = await database `SELECT * FROM users WHERE email =${email}`
 
+  if (checkEmail.length == 0) {
+    res.status(404).json({
+      status : "false",
+      massage : "Data email not found",
+    })
+    return;
+  }
+
+
+   //check if password correct
+  const isMatch = bcrypt.compareSync(password, checkEmail[0].password);
+
+  if (isMatch) {
+    res.status(200).json({
+      status : "True",
+      massage : "Login succes",
+    })
+  }else{
+    res.status(400).json({
+      status : "flase",
+      massage : "Password incorrect",
+  })
+}
+
+
+} catch (error) {
+  res.status(500).json({
+    status : "False",
+    massage : "Something wrong in server"
+  })
+}
 })
 
 
