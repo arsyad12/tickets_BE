@@ -570,6 +570,124 @@ app.get("/users/me", checkJWT, async (req, res) => {
 
 })
 
+// Edit User
+
+app.put("/users/edit/", checkJWT, async (req, res) => {
+  try {
+
+    const token = req.headers.authorization.slice(7) // get token from authoriztion and slice 7 string in the front jwt
+    const decoded = jwt.verify(token, process.env.APP_SECRET_TOKEN) //verify the token with env jwt
+
+    const {id} = decoded;
+    
+    const {
+        first_name,
+        last_name,
+        phone_number,
+        email,
+        password,
+        photo_profile
+      } = req.body
+
+  
+      //validation input must fill data correctly and completed
+      const isInputValid = first_name &&
+      last_name&&
+      phone_number&&
+      email&&
+      password&&
+      photo_profile;
+  
+      if (!isInputValid) {
+        res.json({
+          status : false,
+          massage : "please maksure data completely",
+        });
+        return;
+      } 
+
+
+  
+    const request = await database `UPDATE users
+    SET first_name = ${first_name},
+    last_name = ${last_name},
+    phone_number = ${phone_number},
+    email = ${email},
+    photo_profile = ${photo_profile}
+    WHERE id = ${id}` //get data bye token id
+
+      res.status(200).json({
+        status : "true",
+        massage : "Update data success"
+      })
+
+
+} catch (error) {
+  res.status(500).json({
+    status : "false",
+    massage : "Error in server"
+  })
+}
+    
+
+
+
+})
+
+
+// Edit password
+
+app.put("/users/edit/password/", checkJWT, async (req, res) => {
+  try {
+
+    const token = req.headers.authorization.slice(7) // get token from authoriztion and slice 7 string in the front jwt
+    const decoded = jwt.verify(token, process.env.APP_SECRET_TOKEN) //verify the token with env jwt
+    const {id} = decoded;
+    
+    const {
+        password
+      } = req.body
+
+  
+      //validation input must fill data correctly and completed
+      const isInputValid = password
+  
+      if (!isInputValid) {
+        res.json({
+          status : false,
+          massage : "please maksure data completely",
+        });
+        return;
+      } 
+
+  // this 3 variable is for encryption password
+  const saltRounds = 10;
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hash = bcrypt.hashSync(password, salt); //password is from deconstruction parameter
+
+  
+    const request = await database `UPDATE users
+    SET password = ${hash}
+    WHERE id = ${id}` //get data bye token id
+
+      res.status(200).json({
+        status : "true",
+        massage : "Update data success"
+      })
+
+
+} catch (error) {
+  res.status(500).json({
+    status : "false",
+    massage : "Error in server"
+  })
+}
+    
+
+
+
+})
+
 
 
 app.listen(port, ()=>{
