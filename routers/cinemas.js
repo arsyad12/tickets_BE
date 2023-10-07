@@ -1,5 +1,6 @@
 const database = require("../database");
 const router = require("express").Router()
+const modelCinemas = require('../models/cinemas')
 
 // end point cinemas
 
@@ -7,7 +8,7 @@ const router = require("express").Router()
 router.get("/cinemas", async (req, res) => {
     try {
   
-     const request = await database `SELECT * FROM cinemas`
+     const request = await modelCinemas.getAllcinemas();
   
      res.json({
         status : true,
@@ -32,7 +33,7 @@ router.get("/cinemas", async (req, res) => {
   
       const {id} = req.params
   
-      request = await database `SELECT * FROM cinemas where id = ${id}`
+      request = await modelCinemas.getSelectedCinemas(id)
   
       res.json({
         status : true,
@@ -79,12 +80,10 @@ router.get("/cinemas", async (req, res) => {
         status : false,
         massage : "Please makesure input data completed",
       });
-    } else {
-      
-    }
+      return;
+    } 
   
-    const request = await database `INSERT INTO cinemas(movie_id,name,city,address,show_times,price,logo)
-      VALUES(${movie_id},${name},${city},${address},${show_times},${price},${logo}) RETURNING id `;
+    const request = await modelCinemas.postCinemas(req.body);
   
       if (request.length>0) {
         res.json({
@@ -124,15 +123,13 @@ router.get("/cinemas", async (req, res) => {
   
       try {
   
-        const request = await database `UPDATE cinemas
-        SET movie_id = ${movie_id},
-            name = ${name},
-            city =${city},
-            address =${address},
-            show_times = ${show_times},
-            price = ${price},
-            logo = ${logo}
-        WHERE id = ${id};`
+        const request = await modelCinemas.editCinemas(id,{movie_id,
+          name,
+          city,
+          address,
+          show_times,
+          price,
+          logo})
   
         res.status(200).json({
           status : "success",
@@ -157,11 +154,12 @@ router.get("/cinemas", async (req, res) => {
   // delete cinemas
   
   router.delete("/cinemas/:id", async (req, res) => {
+    
     const {id} = req.params
   
     try {
-      const request = await database `DELETE FROM cinemas
-      WHERE id = ${id};`
+      const request = await modelCinemas.deleteCinemas(id)
+      
       res.status(200).json({
         status : "true",
         massage : "delete data succes",
