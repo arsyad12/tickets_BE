@@ -17,7 +17,9 @@ app.use(
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
 }));
 
+//use helmet for security headers
 app.use(helmet());
+
 //import router/endpoint after separate code from index
 
 const moviesRouters = require('./routers/movies')

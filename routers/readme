@@ -1,0 +1,19 @@
+Folder router berguna untuk menampung semua jenis link endpoint
+
+pertama harus di dafatrin dulu
+
+const router = require("express").Router()
+
+contoh sebelumnya kan 
+
+app.get("/cinemas", async (req, res) => {})
+
+dirubah jadi 
+
+router.get("/cinemas", async (req, res) => {})
+
+kemudian di export
+
+module.exports = router;
+
+dan cara maanggil di index bisa liat di file indexnya

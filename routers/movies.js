@@ -1,13 +1,18 @@
 const database = require("../database");
 const router = require("express").Router()
 
+// import model for database query
+
+const  modelMovies = require('../models/movies')
+
 
 //in router.get we can use for write the rest API
 // endpoint movies is for called all data wee needed from table movies
 router.get("/movies", async (req, res) => {
     try {
-      const request =
-        await database`SELECT id, name, duration, genres, posters FROM movies`;
+      //call the method for run query database from modelMovie
+      const request = await modelMovies.getAllmovies()
+        
       res.json({
         status: true,
         massage: "get data succes",
@@ -25,9 +30,11 @@ router.get("/movies", async (req, res) => {
   // endpoint movies/:id is for call data from selected id in table movies
   
   router.get("/movies/:id", async (req, res) => {
-    const { id } = req.params;
     try {
-      const request = await database`SELECT * FROM movies WHERE id = ${id}`;
+      const { id } = req.params; 
+      //call the method for run query database from modelMovie by id parameter
+      const request = await modelMovies.getSelectedMovie(id);
+
       res.json({
         status: true,
         massage: "get data succes",
@@ -76,8 +83,16 @@ router.get("/movies", async (req, res) => {
       }
   
       // console.log(req.body); for checking data received in express
-      const request = await database`INSERT INTO movies(name,realese_date,duration,genres,directed_by,casts,synopsis,posters)
-      values(${name},${realese_date},${duration},${genres},${directed_by},${casts},${synopsis},${posters}) RETURNING id`;
+      const request = await modelMovies.postMovies({ //send parameter for models postMovies
+        name,
+        realese_date,
+        duration,
+        genres,
+        directed_by,
+        casts,
+        synopsis,
+        posters,
+      });
   
       if (request.length>0) {
           res.json({
@@ -105,8 +120,11 @@ router.get("/movies", async (req, res) => {
   // update movies
   
   router.put("/movies/:id", async (req, res) => {
+    try {
+    
     const {id} = req.params
-    const { name,
+
+      const { name,
       realese_date,
       duration,
       genres,
@@ -115,21 +133,20 @@ router.get("/movies", async (req, res) => {
       synopsis,
       posters} = req.body
     
-      try {
-      const request = await database `UPDATE movies
-      SET  name = ${name},
-      realese_date = ${realese_date},
-      duration = ${duration},
-      genres = ${genres},
-      directed_by = ${directed_by},
-      casts = ${casts},
-      synopsis = ${synopsis},
-      posters = ${posters}
-      WHERE id = ${id};`
-  
+      
+      const request = await modelMovies.editMovies({name,
+        realese_date,
+        duration,
+        genres,
+        directed_by,
+        casts,
+        synopsis,
+        posters},id)
+
       res.status(200).json({
           status : "Succes",
           massage : "Update data succes",
+          data : request
   
       });
   
@@ -145,10 +162,11 @@ router.get("/movies", async (req, res) => {
   // delete movies
   
   router.delete("/movies/:id", async (req, res) => {
-  const {id} = req.params
   
   try {
-    const request = await database `DELETE FROM movies WHERE id = ${id}`
+    const {id} = req.params
+
+    const request = await modelMovies.deleteMovie(id)
     
     res.status(200).json({
       status : "success",
