@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = require("express").Router()
 
+const usersModels = require('../models/users')
+
 
 // end point user
 
@@ -18,7 +20,7 @@ const router = require("express").Router()
 // end point users/login -> for acces detail data with token JWT(json web token)
 // end point users/edit -> for edit data with encrypton after login with JWT
 
-//get all user
+
 
 
 //middle ware for GET DETAIL USER by token
@@ -40,9 +42,11 @@ const checkJWT = async (req,res,next) =>{
     }
   }
 
+  //get all user
+
 router.get("/users", async (req, res) => {
     try {
-      const request = await database `SELECT first_name,last_name,phone_number,photo_profile FROM users`
+      const request = await usersModels.getAlluser()
       // id, email and pass is privacy, so dont call on this endpoint
       res.json({
         status : true,
@@ -60,7 +64,7 @@ router.get("/users", async (req, res) => {
   
   //users/register (post user)
   
-  router.post("/users", async (req, res) => {
+router.post("/users", async (req, res) => {
   
     try {
       
@@ -90,7 +94,7 @@ router.get("/users", async (req, res) => {
       } 
   
       //validation for checking email, for prevent same email or duplicate email
-      const checkEmail = await database `SELECT * FROM users WHERE email =${email}`
+      const checkEmail = await usersModels.checkEmail(email)
   
       if (checkEmail.length > 0) {
         res.status(400).json({
@@ -100,25 +104,14 @@ router.get("/users", async (req, res) => {
           return;
       }
   
-      // this 3 variable is for encryption password
-      const saltRounds = 10;
-      const salt = bcrypt.genSaltSync(saltRounds);
-      const hash = bcrypt.hashSync(password, salt); //password is from deconstruction parameter
-  
-     const request = await database `INSERT INTO users( 
-      first_name,
-      last_name,
-      phone_number,
-      email,
-      password,
-      photo_profile) VALUES (
-        ${first_name},
-        ${last_name},
-        ${phone_number},
-        ${email},
-        ${hash}, 
-        ${photo_profile}
-      ) RETURNING id`;
+     const request = await usersModels.registerUser({
+        first_name,
+        last_name,
+        phone_number,
+        email,
+        password,
+        photo_profile
+     })
   // the password values, change with hash because we need value encryption password from hash
   
       if (request.length>0) {
@@ -138,11 +131,14 @@ router.get("/users", async (req, res) => {
       res.json({
         status : false,
         massage : "something wron in server",
-        data : []
+        data : console.log(error)
       })
     }
   
   })
+
+
+
   
   // LOGIN User, check by email and passwor
   //make Token with JWT 
@@ -153,7 +149,7 @@ router.get("/users", async (req, res) => {
     const {email,password} =req.body
     
     //check if email registered
-    const checkEmail = await database `SELECT * FROM users WHERE email =${email}`
+    const checkEmail = await usersModels.checkEmail(email);
   
     // validation if email not registered
     if (checkEmail.length == 0) {
