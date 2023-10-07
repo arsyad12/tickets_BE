@@ -53,9 +53,38 @@ const usersModels = {
             return request;
     
 
+    },
+
+    getDetailUser : async(decoded)=>{
+        const request = await database `SELECT * FROM users where id = ${decoded.id}`
+    },
+
+    editUser : async(id,payload)=>{
+
+        const{first_name,
+            last_name,
+            phone_number,
+            email,
+            photo_profile} =payload;
+        
+      const request = await database `UPDATE users
+      SET first_name = ${first_name},
+      last_name = ${last_name},
+      phone_number = ${phone_number},
+      email = ${email},
+      photo_profile = ${photo_profile}
+      WHERE id = ${id}` //get data bye token id
+
+      return request;
+
+    },
+
+    editPassword : async(id,hash)=>{
+
+        const request = await database `UPDATE users
+      SET password = ${hash}
+      WHERE id = ${id}` //get data bye token id
     }
-
-
 
   
 }

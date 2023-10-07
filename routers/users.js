@@ -11,8 +11,6 @@ const usersModels = require('../models/users')
 //get all user
 
 
-
-
 // end point user
 // end point /users -> for get data user except password and email
 // end point /users/me -> for get all data with password and email
@@ -196,7 +194,7 @@ router.post("/users", async (req, res) => {
   
       const token = req.headers.authorization.slice(7) // get token from authoriztion and slice 7 string in the front jwt
       const decoded = jwt.verify(token, process.env.APP_SECRET_TOKEN) //verify the token with env jwt
-      const request = await database `SELECT * FROM users where id = ${decoded.id}` //get data bye token id
+      const request = await usersModels.getDetailUser(decoded) //get data bye token id
   
       res.json({
         status : "true",
@@ -228,7 +226,6 @@ router.post("/users", async (req, res) => {
           last_name,
           phone_number,
           email,
-          password,
           photo_profile
         } = req.body
   
@@ -238,7 +235,6 @@ router.post("/users", async (req, res) => {
         last_name&&
         phone_number&&
         email&&
-        password&&
         photo_profile;
     
         if (!isInputValid) {
@@ -251,13 +247,11 @@ router.post("/users", async (req, res) => {
   
   
     
-      const request = await database `UPDATE users
-      SET first_name = ${first_name},
-      last_name = ${last_name},
-      phone_number = ${phone_number},
-      email = ${email},
-      photo_profile = ${photo_profile}
-      WHERE id = ${id}` //get data bye token id
+      const request = await usersModels.editUser(id,{first_name,
+        last_name,
+        phone_number,
+        email,
+        photo_profile})
   
         res.status(200).json({
           status : "true",
@@ -268,7 +262,8 @@ router.post("/users", async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status : "false",
-      massage : "Error in server"
+      massage : "Error in server",
+      data : console.log(error)
     })
   }
       
@@ -309,9 +304,7 @@ router.post("/users", async (req, res) => {
     const hash = bcrypt.hashSync(password, salt); //password is from deconstruction parameter
   
     
-      const request = await database `UPDATE users
-      SET password = ${hash}
-      WHERE id = ${id}` //get data bye token id
+      const request = await usersModels.editPassword(id,hash) //get data bye token id
   
         res.status(200).json({
           status : "true",
