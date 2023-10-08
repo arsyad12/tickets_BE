@@ -221,6 +221,53 @@ const userController ={
       
       
       
+      },
+
+    _editPassword :  async (req, res) => {
+        try {
+      
+          const token = req.headers.authorization.slice(7) // get token from authoriztion and slice 7 string in the fronm jwt
+          const decoded = jwt.verify(token, process.env.APP_SECRET_TOKEN) //verify the token with env jwt
+          const {id} = decoded;
+          
+          const {
+              password
+            } = req.body
+      
+        
+            //validation input must fill data correctly and completed
+            const isInputValid = password
+        
+            if (!isInputValid) {
+              res.json({
+                status : false,
+                massage : "please maksure data completely",
+              });
+              return;
+            } 
+      
+        // this 3 variable is for encryption password
+        const saltRounds = 10;
+        const salt = bcrypt.genSaltSync(saltRounds);
+        const hash = bcrypt.hashSync(password, salt); //password is from deconstruction parameter
+      
+        
+          const request = await usersModels.editPassword(id,hash) //get data bye token id
+      
+            res.status(200).json({
+              status : "true",
+              massage : "Update data success"
+            })
+      
+      
+      } catch (error) {
+        res.status(500).json({
+          status : "false",
+          massage : "Error in server"
+        })
+      }
+      
+      
       }
 }
 
