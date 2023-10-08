@@ -57,6 +57,7 @@ const usersModels = {
 
     getDetailUser : async(decoded)=>{
         const request = await database `SELECT * FROM users where id = ${decoded.id}`
+        return request;
     },
 
     editUser : async(id,payload)=>{

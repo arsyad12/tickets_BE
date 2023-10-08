@@ -1,0 +1,7 @@
+folder controler berfungsi untuk menampung berbagai handler respon dan request
+
+cara menulis sebuah controller supaya rapi bisa seperti ini
+
+_getAllMovies, ini dibaca controller get all movies
+
+jangan lupa import model karena pindah tempat untuk akses databasenya

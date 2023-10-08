@@ -1,4 +1,4 @@
-const database = require("../database");
+
 const router = require("express").Router()
 const modelCinemas = require('../models/cinemas')
 
