@@ -1,47 +1,46 @@
-const database = require("../database");
+/* eslint-disable camelcase */
+const database = require('../database')
 
 const modelCinemas = {
-    getAllcinemas : async()=>{
-        const request = await database `SELECT * FROM cinemas`
-        return request;
-    },
+  getAllcinemas: async () => {
+    const request = await database`SELECT * FROM cinemas`
+    return request
+  },
 
-    getSelectedCinemas : async(id)=>{
-        request = await database `SELECT * FROM cinemas where id = ${id}`
-        return request;
-    },
+  getSelectedCinemas: async (id) => {
+    const request = await database`SELECT * FROM cinemas where id = ${id}`
+    return request
+  },
 
+  postCinemas: async (payload) => {
+    const {
+      movie_id,
+      name,
+      city,
+      address,
+      show_times,
+      price,
+      logo
+    } = payload
 
-    postCinemas : async(payload)=>{
+    const request = await database`INSERT INTO cinemas(movie_id,name,city,address,show_times,price,logo)
+        VALUES(${movie_id},${name},${city},${address},${show_times},${price},${logo}) RETURNING id `
 
-        const {
-            movie_id,
-            name,
-            city,
-            address,
-            show_times,
-            price,
-            logo
-          } = payload;
+    return request
+  },
 
-        const request = await database `INSERT INTO cinemas(movie_id,name,city,address,show_times,price,logo)
-        VALUES(${movie_id},${name},${city},${address},${show_times},${price},${logo}) RETURNING id `;
+  editCinemas: async (id, payload) => {
+    const {
+      movie_id,
+      name,
+      city,
+      address,
+      show_times,
+      price,
+      logo
+    } = payload
 
-        return request;
-    },
-
-    
-    editCinemas : async(id,payload)=>{
-
-        const{movie_id,
-            name,
-            city,
-            address,
-            show_times,
-            price,
-            logo} = payload;
-
-        const request = await database `UPDATE cinemas
+    const request = await database`UPDATE cinemas
         SET movie_id = ${movie_id},
             name = ${name},
             city =${city},
@@ -50,18 +49,15 @@ const modelCinemas = {
             price = ${price},
             logo = ${logo}
         WHERE id = ${id};`
-        return request;
-    },
+    return request
+  },
 
-    
-    deleteCinemas : async(id)=>{
-    
-        const request = await database `DELETE FROM cinemas WHERE id = ${id};`
-     
-        return request;
-    },
+  deleteCinemas: async (id) => {
+    const request = await database`DELETE FROM cinemas WHERE id = ${id};`
 
+    return request
+  }
 
 }
 
-module.exports = modelCinemas;
+module.exports = modelCinemas
