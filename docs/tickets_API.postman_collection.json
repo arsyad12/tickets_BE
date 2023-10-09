@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "9b6f9413-9396-4ca4-8d14-d1f2bd64203f",
+		"name": "tickets_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30080582"
+	},
+	"item": [
+		{
+			"name": "movies",
+			"item": [
+				{
+					"name": "Get All Movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Selected Movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Movies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Loli Metro 2\", \r\n    \"realese_date\" : \"2021-08-08\",\r\n    \"duration\" : \"2 h 12 min\",\r\n    \"genres\" :[\"adventure\",\"action\",\"comedy\"],\r\n    \"directed_by\":\"James B\",\r\n    \"casts\":[\"dwayne Jhonson\",\"Emma\",\"Kevin H\"],\r\n    \"synopsis\":\"Bla bla bla\",\r\n    \"posters\":\"https://cdn0-production-images-kly.akamaized.net/zduBJnIwVqPxuvwEkK7Hpwe_WgE=/800x1066/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/2984036/original/034006400_1575278238-Jumanji_The_Next_Level_Headline.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Movies",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"The pirates of caribeans\", \r\n    \"realese_date\" : \"2021-08-08\",\r\n    \"duration\" : \"2 h 12 min\",\r\n    \"genres\" :[\"adventure\",\"action\",\"comedy\"],\r\n    \"directed_by\":\"James B\",\r\n    \"casts\":[\"dwayne Jhonson\",\"Emma\",\"Kevin H\"],\r\n    \"synopsis\":\"Bla bla bla\",\r\n    \"posters\":\"https://cdn0-production-images-kly.akamaized.net/zduBJnIwVqPxuvwEkK7Hpwe_WgE=/800x1066/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/2984036/original/034006400_1575278238-Jumanji_The_Next_Level_Headline.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Movies",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cinemas",
+			"item": [
+				{
+					"name": "Get All Cinemas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/cinemas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cinemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Selected Cinemas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/cinemas/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cinemas",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Cinemas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"movie_id\" :42,\r\n    \"name\" : \"Holiday Square\",\r\n    \"city\" : \"Jakarta\",\r\n    \"address\" : \"Jl. Soekarno Hatta\",\r\n    \"show_times\" : [\"6:45\",\"8:45\",\"10:45\"],\r\n    \"price\" : 80000,\r\n    \"logo\" :\"https://webnwp.blob.core.windows.net/wpmedia/Cinema_XXI.png\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/cinemas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cinemas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE Cinemas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"movie_id\" :20,\r\n    \"name\" : \"Holiday 88\",\r\n    \"city\" : \"Jakarta\",\r\n    \"address\" : \"Jl. Soekarno Hatta\",\r\n    \"show_times\" : [\"6:45\",\"8:45\",\"10:45\"],\r\n    \"price\" : 80000,\r\n    \"logo\" :\"https://webnwp.blob.core.windows.net/wpmedia/Cinema_XXI.png\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/cinemas/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cinemas",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Cinemas",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/cinemas/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cinemas",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Get All User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Detail Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgsImZpcnN0X25hbWUiOiJUZXJpemxhIiwibGFzdF9uYW1lIjoiU3RhcmxpZ2h0IiwicGhvbmVfbnVtYmVyIjoiMDg5MzgyMzk4MzkiLCJlbWFpbCI6ImxpbmdAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkaHBhczBJbno4VGNRUHhDMS5TSlNOLklzUmNxbXFrMlBBQ3llLnBROVVUV1VPU2IzRWZBYlciLCJwaG90b19wcm9maWxlIjoiaHR0cHM6Ly9zdGF0aWMud2lraWEubm9jb29raWUubmV0L3Zpb2xldC1ldmVyZ2FyZGVuL2ltYWdlcy9hL2FlL1Zpb2xldF9FdmVyZ2FyZGVuLnBuZy9yZXZpc2lvbi9sYXRlc3QvdGh1bWJuYWlsL3dpZHRoLzM2MC9oZWlnaHQvMzYwP2NiPTIwMTgwMjA5MTk1ODI5IiwiaWF0IjoxNjk2ODE5NTMxfQ.QtyjuPc1gc-J39-vikkkFVO6PbBwUJQPPhsxjB_1YYs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post User / Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"first_name\" : \"POPOL \",\r\n      \"last_name\" : \"Starlight\",\r\n      \"phone_number\":\"08938239839\",\r\n      \"email\" : \"fany@gmail.com\",\r\n      \"password\" : \"pijar1234\",\r\n      \"photo_profile\" : \"https://static.wikia.nocookie.net/violet-evergarden/images/a/ae/Violet_Evergarden.png/revision/latest/thumbnail/width/360/height/360?cb=20180209195829\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"ling@gmail.com\",\r\n    \"password\" : \"blue\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgsImZpcnN0X25hbWUiOiJUZXJpemxhIiwibGFzdF9uYW1lIjoiU3RhcmxpZ2h0IiwicGhvbmVfbnVtYmVyIjoiMDg5MzgyMzk4MzkiLCJlbWFpbCI6ImxpbmdAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkaHBhczBJbno4VGNRUHhDMS5TSlNOLklzUmNxbXFrMlBBQ3llLnBROVVUV1VPU2IzRWZBYlciLCJwaG90b19wcm9maWxlIjoiaHR0cHM6Ly9zdGF0aWMud2lraWEubm9jb29raWUubmV0L3Zpb2xldC1ldmVyZ2FyZGVuL2ltYWdlcy9hL2FlL1Zpb2xldF9FdmVyZ2FyZGVuLnBuZy9yZXZpc2lvbi9sYXRlc3QvdGh1bWJuYWlsL3dpZHRoLzM2MC9oZWlnaHQvMzYwP2NiPTIwMTgwMjA5MTk1ODI5IiwiaWF0IjoxNjk2ODE5NTMxfQ.QtyjuPc1gc-J39-vikkkFVO6PbBwUJQPPhsxjB_1YYs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n      \"first_name\" : \"Gord\",\r\n      \"last_name\" : \"Starlight\",\r\n      \"phone_number\":\"08938239839\",\r\n      \"email\" : \"ling@gmail.com\",\r\n      \"photo_profile\" : \"https://static.wikia.nocookie.net/violet-evergarden/images/a/ae/Violet_Evergarden.png/revision/latest/thumbnail/width/360/height/360?cb=20180209195829\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgsImZpcnN0X25hbWUiOiJUZXJpemxhIiwibGFzdF9uYW1lIjoiU3RhcmxpZ2h0IiwicGhvbmVfbnVtYmVyIjoiMDg5MzgyMzk4MzkiLCJlbWFpbCI6ImxpbmdAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkaHBhczBJbno4VGNRUHhDMS5TSlNOLklzUmNxbXFrMlBBQ3llLnBROVVUV1VPU2IzRWZBYlciLCJwaG90b19wcm9maWxlIjoiaHR0cHM6Ly9zdGF0aWMud2lraWEubm9jb29raWUubmV0L3Zpb2xldC1ldmVyZ2FyZGVuL2ltYWdlcy9hL2FlL1Zpb2xldF9FdmVyZ2FyZGVuLnBuZy9yZXZpc2lvbi9sYXRlc3QvdGh1bWJuYWlsL3dpZHRoLzM2MC9oZWlnaHQvMzYwP2NiPTIwMTgwMjA5MTk1ODI5IiwiaWF0IjoxNjk2ODE5NTMxfQ.QtyjuPc1gc-J39-vikkkFVO6PbBwUJQPPhsxjB_1YYs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"blue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/edit/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"edit",
+								"password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

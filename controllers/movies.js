@@ -1,6 +1,10 @@
 // import model for database query
 const modelMovies = require('../models/movies')
 
+//node-input-validator for make validattion input
+
+const { Validator } = require('node-input-validator');
+
 const movieController = {
     
     _getAllmovies : async(req,res)=>{

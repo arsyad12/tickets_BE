@@ -19,6 +19,7 @@
     "express": "^4.18.2",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
+    "node-input-validator": "^4.5.1",
     "postgres": "^3.3.5"
   }
 }

@@ -1,8 +1,5 @@
-
-const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 const router = require("express").Router()
-
 
 //import controller for get response or requesst
 
