@@ -27,6 +27,11 @@ const userRouters = require('./routers/users')
 const cinemasRouters = require('./routers/cinemas')
 
 // call endpoint
+
+app.use(moviesRouters)
+app.use(userRouters)
+app.use(cinemasRouters)
+
 app.use('/', (req, res) => {
   return res.status(200).json({
     success: true,
@@ -34,10 +39,6 @@ app.use('/', (req, res) => {
     data: []
   })
 })
-
-app.use(moviesRouters)
-app.use(userRouters)
-app.use(cinemasRouters)
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`)
