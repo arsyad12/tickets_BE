@@ -32,6 +32,8 @@ app.use(moviesRouters)
 app.use(userRouters)
 app.use(cinemasRouters)
 
+// default response harus dibawah call endpoint biar ga nimpa fetch data
+
 app.use('/', (req, res) => {
   return res.status(200).json({
     success: true,
