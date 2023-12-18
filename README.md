@@ -1,7 +1,7 @@
 <br />
 <p align="center">
   <div align="center">
-    <img height="150" src="https://img.freepik.com/free-vector/vector-two-designed-cinema-tickets-close-up-top-view-isolated-white-background_1284-47320.jpg?w=740&t=st=1702879765~exp=1702880365~hmac=eb0c4d800c67bf906f0f2ea97ca0622e2604c9d8c07eef90d8dd8916e2c78d94" alt="blanja" border="0"/>
+    <img height="150" src="https://img.freepik.com/free-vector/vector-two-designed-cinema-tickets-close-up-top-view-isolated-white-background_1284-47320.jpg?w=740&t=st=1702879765~exp=1702880365~hmac=eb0c4d800c67bf906f0f2ea97ca0622e2604c9d8c07eef90d8dd8916e2c78d94" alt="tickitz" border="0"/>
   </div>
   <h3 align="center">Tickitz</h3>
   <p align="center">
@@ -21,8 +21,7 @@
 - [Installation](#installation)
   - [Documentation](#documentation)
   - [Related Project](#related-project)
-- [Contributors](#contributors)
-  - [Meet The Team Members](#meet-the-team-members)
+
 
 # About The Project
 
@@ -49,7 +48,7 @@ These are the libraries and service used for building this backend API
 git clone https://github.com/arsyad12/tickets_BE.git
 ```
 
-2. Change directory to Be_Blanja
+2. Change directory to tickets_BE
 
 ```sh
 cd tickets_BE
