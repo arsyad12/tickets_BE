@@ -27,6 +27,13 @@ const userRouters = require('./routers/users')
 const cinemasRouters = require('./routers/cinemas')
 
 // call endpoint
+app.use('/', (req, res) => {
+  return res.status(200).json({
+    success: true,
+    message: 'API runnig well',
+    data: []
+  })
+})
 
 app.use(moviesRouters)
 app.use(userRouters)
