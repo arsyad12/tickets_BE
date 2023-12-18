@@ -4,7 +4,7 @@ const database = require('../database')
 const modelMovies = {
 
   getAllmovies: async () => {
-    const request = await database`SELECT id, name, duration, genres, posters FROM movies`
+    const request = await database`SELECT * FROM movies`
     return request
   },
 
